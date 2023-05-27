@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <iostream>
+#define N 1000
+
+main(){
+
+	int n,i,h,p;
+	float m,b,sx,sy,sxy,sx2, x[N],y[N];
+
+   printf("Anio: ");
+   scanf("%d",&n);
+
+	for (i=0;i<n;i++){
+    	printf("\nIngresa el anio %d:         \nVentas: ",i+1);
+            scanf("%f",&y[i]);
+            printf("Publicidad: ",i+1);
+            scanf("%f",&x[i]);
+   }
+
+//Hacemos las sumatorias, primero lo inicializamos
+	sx=sy=sxy=sx2=0;
+	
+	for (i=0;i<n;i++){
+		sxy=sxy+x[i]*y[i];
+   		sx2 += x[i]*x[i];
+   		sx += x[i];
+   		sy += y[i];
+   	}
+	
+	/*printf("\nExy: %.2f",sxy);
+   	printf("\nEx^2: %.2f",sx2);
+   	printf("\nEx: %.2f",sx);
+   	printf("\nEy: %.2f",sy);*/
+   	
+//Pendiente e Interseccion
+   	m = (n*sxy - sx*sy) / (n*sx2 - sx*sx);
+   	b = (sy - m*sx) / n;
+
+//Mostramos los valores de la pendiente y de la interseccion
+	printf("\nPendiente(m) = %.2f \nInterseccion(b) = %.2f\n\n",m,b);
+
+
+//la formula para calcular la variable dependiente (Y) es:
+	printf("\nDependiente = %.2f*X+ (%.2f)\n\n",m,b);
+	printf("",m,b);
+	printf("\nIngrese la prediccion en Publicidad x: ");
+	scanf("%d",&h);
+	p=m*h+b;
+	printf("\nLa prediccion es: %d\n",p);
+}
