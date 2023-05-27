@@ -1,0 +1,110 @@
+import random
+import numpy as np
+
+a=1
+z=21
+C_rate=int(input('Rango de Cruzamiento: '))
+M_rate=int(input('Rango de Mutacion: '))
+poblacion = np.zeros((100,20))
+poblacion1= np.zeros((100,20))
+fitnes=np.zeros(100)
+for i in range(100):
+  for j in range(20):
+    ran=random.randint(0,1)
+    if ran==0:
+      poblacion[i,j]=int(0)
+      poblacion1[i,j]=poblacion[i,j]
+    if ran==1:
+      poblacion[i,j]=1
+      poblacion1[i,j]=poblacion[i,j]
+###### Algortimo encargado de sacar los 1´s que hay por cada 1 de los 100 valores
+gen=0
+for i in range(100):
+  totalf=0
+  for j in range(20):
+    if poblacion[i,j]==1:
+      totalf=totalf+1
+  fitnes[i]=totalf
+  if totalf==20:
+    a=0
+    z=i
+  gen=gen+totalf
+unos_poblacion=gen
+########
+generacion=1
+#####MATRIZ
+j=0
+for i in range(100):
+  print(i,"=",poblacion[i,j],poblacion[i,j+1],poblacion[i,j+2],poblacion[i,j+3],".",poblacion[i,j+4],poblacion[i,j+5],poblacion[i,j+6],poblacion[i,j+7],".",poblacion[i,j+8],poblacion[i,j+9],poblacion[i,j+10],poblacion[i,j+11],".",poblacion[i,j+12],poblacion[i,j+13],poblacion[i,j+14],poblacion[i,j+15],".",poblacion[i,j+16],poblacion[i,j+17],poblacion[i,j+18],poblacion[i,j+19],"fitness =",fitnes[i])
+print("1's finales =",gen)
+print("Generaciones =",generacion)
+#######Algoritmo de crossover
+while(a!=0):
+  generacion=generacion+1
+  for i in range(100):
+    pro_=random.randint(1,100)
+    if C_rate>pro_:
+      padre=0
+      nemo=random.randint(1,gen)
+      for j in range(100):
+        padre=padre+fitnes[j]
+        if padre>nemo:
+          abu=j
+          break
+      rango_20=random.randint(0,19)
+      numero_de_cambios=0
+      for j in range(20):
+        if j>=rango_20:
+          numero_de_cambios=numero_de_cambios+1
+          cambio=poblacion[i,j]
+          poblacion[i,j]=poblacion[abu,j]
+          poblacion[abu,j]=cambio
+
+############### algoritmo de mutacion
+  for i in range(100):
+    for j in range(20):
+      pro_=random.randint(1,100)
+      if M_rate>pro_:
+        if poblacion[i,j]==1:
+          poblacion[i,j]=0
+        else:
+          poblacion[i,j]=1
+
+######## 
+  gen=0
+  for t in range(100):
+    totalf=0
+    for j in range(20):
+      if poblacion[t,j]==1:
+        totalf=totalf+1
+    fitnes[t]=totalf
+    if totalf==20:
+      a=0
+      z=t
+    gen=gen+totalf
+  if a==0:
+    break
+######## Muta 100 veces
+  if(unos_poblacion>gen):
+    for i in range(100):
+      for j in range(20):
+        poblacion[i,j]=poblacion1[i,j]
+        gen=unos_poblacion
+  else:
+    for i in range(100):
+      for j in range(20):
+        poblacion1[i,j]=poblacion[i,j]
+        unos_poblacion=gen
+  j=0
+  for i in range(100):
+    print(i,"=",poblacion1[i,j],poblacion1[i,j+1],poblacion1[i,j+2],poblacion1[i,j+3],".",poblacion1[i,j+4],poblacion1[i,j+5],poblacion1[i,j+6],poblacion1[i,j+7],".",poblacion1[i,j+8],poblacion1[i,j+9],poblacion1[i,j+10],poblacion1[i,j+11],".",poblacion1[i,j+12],poblacion1[i,j+13],poblacion1[i,j+14],poblacion1[i,j+15],".",poblacion1[i,j+16],poblacion1[i,j+17],poblacion1[i,j+18],poblacion1[i,j+19],"fitness =",fitnes[i])
+  print("1's finales =",gen)
+  print("Generaciones =",generacion)
+j=0
+for i in range(100):
+  print(i,"=",poblacion[i,j],poblacion[i,j+1],poblacion[i,j+2],poblacion[i,j+3],".",poblacion[i,j+4],poblacion[i,j+5],poblacion[i,j+6],poblacion[i,j+7],".",poblacion[i,j+8],poblacion[i,j+9],poblacion[i,j+10],poblacion[i,j+11],".",poblacion[i,j+12],poblacion[i,j+13],poblacion[i,j+14],poblacion[i,j+15],".",poblacion[i,j+16],poblacion[i,j+17],poblacion[i,j+18],poblacion[i,j+19],"fitness =",fitnes[i])
+
+print("1's finales =",gen)
+print("Generaciones =",generacion)  
+print("Optima =",z)
+
